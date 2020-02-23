@@ -1,0 +1,15 @@
+name: lucky_encrypted
+version: 0.1.0
+
+authors:
+  - Håkan Nylén <hakan@dun.se>
+
+crystal: 0.33.0
+
+license: MIT
+
+dependencies:
+  lucky:
+    github: luckyframework/lucky
+  avram:
+    github: luckyframework/avram
