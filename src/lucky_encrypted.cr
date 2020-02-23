@@ -24,7 +24,7 @@ module LuckyEncrypted
       @encryptor = ::Lucky::MessageEncryptor.new(ENV["ENCRYPTED_SECRET"])
     end
 
-    def to_s
+    def to_s : String
       value
     end
 
@@ -40,14 +40,17 @@ module LuckyEncrypted
       alias ColumnType = String
       include Avram::Type
 
-      def parse(value : StringEncrypted)
+      def from_db!(value : String)
         encryptor = ::Lucky::MessageEncryptor.new(ENV["ENCRYPTED_SECRET"])
-        SuccessfulCast(StringEncrypted).new(encryptor.verify_and_decrypt(value))
+        StringEncrypted.new(encryptor.verify_and_decrypt(value))
+      end
+
+      def parse(value : StringEncrypted)
+        SuccessfulCast(StringEncrypted).new(value)
       end
 
       def parse(value : String)
-        encryptor = ::Lucky::MessageEncryptor.new(ENV["ENCRYPTED_SECRET"])
-        SuccessfulCast(StringEncrypted).new(StringEncrypted.new(encryptor.verify_and_decrypt(value)))
+        SuccessfulCast(StringEncrypted).new(StringEncrypted.new(value))
       end
 
       def to_db(value : String)
