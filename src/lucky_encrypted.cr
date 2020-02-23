@@ -9,6 +9,10 @@ module LuckyEncrypted
   VERSION = "0.1.0"
 
   class StringEncrypted
+    def self.adapter
+      Lucky
+    end
+
     @encryptor : ::Lucky::MessageEncryptor
 
     def initialize(@encrypted : String)
