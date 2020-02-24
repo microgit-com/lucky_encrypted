@@ -13,23 +13,19 @@ module LuckyEncrypted
       Lucky
     end
 
-    @encryptor : ::Lucky::MessageEncryptor
-
     def initialize(@encrypted : String)
-      @encryptor = ::Lucky::MessageEncryptor.new(ENV["ENCRYPTED_SECRET"])
     end
 
     def initialize(encrypted : Slice(UInt8))
       @encrypted = String.new(encrypted)
-      @encryptor = ::Lucky::MessageEncryptor.new(ENV["ENCRYPTED_SECRET"])
     end
 
     def to_s : String
       value
     end
 
-    private def value
-      @encrypted.strip.downcase
+    def value
+      @encrypted.strip
     end
 
     def blank?
@@ -42,7 +38,7 @@ module LuckyEncrypted
 
       def from_db!(value : String)
         encryptor = ::Lucky::MessageEncryptor.new(ENV["ENCRYPTED_SECRET"])
-        StringEncrypted.new(encryptor.verify_and_decrypt(value))
+        parse(String.new(encryptor.verify_and_decrypt(value)))
       end
 
       def parse(value : StringEncrypted)

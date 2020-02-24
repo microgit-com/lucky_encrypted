@@ -17,6 +17,6 @@ describe LuckyEncrypted::StringEncrypted do
     encryptor = LuckyEncrypted::StringEncrypted.new("encrypted")
 
     encrypted_value = LuckyEncrypted::StringEncrypted::Lucky.to_db("encrypted3")
-    LuckyEncrypted::StringEncrypted::Lucky.parse(encrypted_value).value.to_s.should eq("encrypted3")
+    LuckyEncrypted::StringEncrypted::Lucky.from_db!(encrypted_value).value.to_s.should eq("encrypted3")
   end
 end
