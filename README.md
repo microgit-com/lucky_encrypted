@@ -20,9 +20,6 @@ You only need one column, as both the iv and the data is saved in one, splitted.
 
 ## Usage
 
-* ```crystal
-require "lucky_encrypted"
-```
 * add `require "lucky_encrypted"` in shards.cr
 * Create an column for the encrypted string you want to save with lucky migration, i use `otp_secret` as example.
 * create a secret for the encryption with `lucky gen.secret_key`
