@@ -22,8 +22,15 @@ You only need one column, as both the iv and the data is saved in one, splitted.
 
 * add `require "lucky_encrypted"` in shards.cr
 * Create an column for the encrypted string you want to save with lucky migration, i use `otp_secret` as example.
-* create a secret for the encryption with `lucky gen.secret_key`
-* add it with dotenv or what ever you use, or just set environment for `ENCRYPTED_SECRET`
+* set a config for LuckyEncrypted:
+  ```crystal
+  # In config/lucky_encrypted.cr
+  require "./server" # To get the configuration from the server
+  LuckyEncrypted.configure do |settings|
+    settings.secret = Lucky::Server.settings.secret_key_base
+  end
+  ```
+  you can use lucky's secret key base or generate a different secret with `lucky gen.secret_key`
 
 * Add the type `LuckyEncrypted::StringEncrypted` as type for that column in the model:
 

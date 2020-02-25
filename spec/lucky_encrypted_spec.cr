@@ -1,7 +1,10 @@
 require "./spec_helper"
-ENV["ENCRYPTED_SECRET"] = "seoVGHoTUV+rELWE/tlH145unCmdq18/OOsjuKWTS30="
 describe LuckyEncrypted::StringEncrypted do
-  # TODO: Write tests
+  before_each do
+    LuckyEncrypted.configure do |c|
+      c.secret = "seoVGHoTUV+rELWE/tlH145unCmdq18/OOsjuKWTS30="
+    end
+  end
 
   it "value is set" do
     encryptor = LuckyEncrypted::StringEncrypted.new("encrypted")

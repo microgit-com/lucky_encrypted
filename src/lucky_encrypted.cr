@@ -1,5 +1,7 @@
 require "lucky/support/message_encryptor"
 require "lucky/renderable_error"
+require "lucky/allowed_in_tags"
+require "habitat"
 require "lucky/errors"
 require "avram/type"
 require "avram/criteria"
@@ -8,7 +10,13 @@ require "avram/charms/string_extensions"
 module LuckyEncrypted
   VERSION = "0.1.0"
 
+  Habitat.create do
+    setting secret : String
+  end
+
   class StringEncrypted
+    include Lucky::AllowedInTags
+
     def self.adapter
       Lucky
     end
@@ -25,7 +33,7 @@ module LuckyEncrypted
     end
 
     def value
-      @encrypted.strip
+      @encrypted
     end
 
     def blank?
@@ -37,8 +45,8 @@ module LuckyEncrypted
       include Avram::Type
 
       def from_db!(value : String)
-        encryptor = ::Lucky::MessageEncryptor.new(ENV["ENCRYPTED_SECRET"])
-        parse(String.new(encryptor.verify_and_decrypt(value)))
+        encryptor = ::Lucky::MessageEncryptor.new(LuckyEncrypted.settings.secret)
+        StringEncrypted.new(encryptor.verify_and_decrypt(value))
       end
 
       def parse(value : StringEncrypted)
@@ -50,12 +58,12 @@ module LuckyEncrypted
       end
 
       def to_db(value : String)
-        encryptor = ::Lucky::MessageEncryptor.new(ENV["ENCRYPTED_SECRET"])
-        encryptor.encrypt_and_sign(StringEncrypted.new(value).to_s)
+        encryptor = ::Lucky::MessageEncryptor.new(LuckyEncrypted.settings.secret)
+        encryptor.encrypt_and_sign(value)
       end
 
       def to_db(value : StringEncrypted)
-        encryptor = ::Lucky::MessageEncryptor.new(ENV["ENCRYPTED_SECRET"])
+        encryptor = ::Lucky::MessageEncryptor.new(LuckyEncrypted.settings.secret)
         encryptor.encrypt_and_sign(value.to_s)
       end
 
