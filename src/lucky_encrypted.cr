@@ -8,7 +8,7 @@ require "avram/criteria"
 require "avram/charms/string_extensions"
 
 module LuckyEncrypted
-  VERSION = "0.1.0"
+  VERSION = "0.2.0"
 
   Habitat.create do
     setting secret : String
