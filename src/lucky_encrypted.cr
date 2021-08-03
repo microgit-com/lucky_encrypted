@@ -1,11 +1,4 @@
-require "lucky/support/message_encryptor"
-require "lucky/renderable_error"
-require "lucky/allowed_in_tags"
-require "habitat"
-require "lucky/errors"
-require "avram/type"
-require "avram/criteria"
-require "avram/charms/string_extensions"
+require "lucky"
 
 module LuckyEncrypted
   VERSION = "0.2.0"
