@@ -4,7 +4,7 @@ version: 0.2.0
 authors:
   - Håkan Nylén <hakan@dun.se>
 
-crystal: ">= 1.1.0"
+crystal: ">= 1.0.0"
 
 license: MIT
 
