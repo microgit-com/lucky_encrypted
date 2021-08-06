@@ -1,4 +1,5 @@
 require "./spec_helper"
+
 describe LuckyEncrypted::StringEncrypted do
   before_each do
     LuckyEncrypted.configure do |c|
