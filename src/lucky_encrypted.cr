@@ -1,4 +1,5 @@
 require "lucky"
+require "avram"
 
 module LuckyEncrypted
   VERSION = "0.2.0"
